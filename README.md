@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/Rechnungsapi/rechnungsapi-erp-demo/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Rechnungsapi/rechnungsapi-erp-demo/ci.yml?branch=main&label=tests" alt="tests"></a>
   <a href="https://www.npmjs.com/package/rechnungsapi-sdk"><img src="https://img.shields.io/npm/v/rechnungsapi-sdk?color=2563eb&label=rechnungsapi-sdk" alt="rechnungsapi-sdk version"></a>
-  <img src="https://img.shields.io/badge/node-%E2%89%A520.12-339933" alt="Node 20.12 or newer">
+  <img src="https://img.shields.io/badge/node-%E2%89%A522.12-339933" alt="Node 22.12 or newer">
   <img src="https://img.shields.io/badge/runtime%20dependencies-3-16a34a" alt="three runtime dependencies">
   <img src="https://img.shields.io/badge/CDN-none-16a34a" alt="no CDN">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-16a34a" alt="MIT license"></a>
@@ -51,7 +51,7 @@ Around that sits what makes it feel like an ERP: customers, automatic gap-free i
 
 ## Run it in two minutes
 
-You need [Node.js](https://nodejs.org) 20.12 or newer and a free API token: [create an account](https://rechnungsapi.de/register), open **Profile** and copy the token.
+You need [Node.js](https://nodejs.org) 22.12 or newer and a free API token: [create an account](https://rechnungsapi.de/register), open **Profile** and copy the token.
 
 ```bash
 git clone https://github.com/Rechnungsapi/rechnungsapi-erp-demo.git

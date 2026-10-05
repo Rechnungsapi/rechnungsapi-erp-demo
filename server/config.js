@@ -33,7 +33,7 @@ export function loadConfig(env = process.env) {
 
 /** @typedef {ReturnType<typeof loadConfig>} Config */
 
-/** Loads ".env" from the working directory when it exists (Node 20.12 and newer). */
+/** Loads ".env" from the working directory when it exists (Node 22 and newer). */
 export function loadDotEnv() {
   try {
     process.loadEnvFile()

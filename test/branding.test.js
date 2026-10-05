@@ -145,8 +145,8 @@ describe("what the README says is true", () => {
 
   it("matches the badges and numbers it shows", () => {
     expect(Object.keys(pkg.dependencies)).toHaveLength(3) // "runtime dependencies: 3"
-    expect(pkg.engines.node).toBe(">=20.12")
-    expect(readme).toContain("20.12")
+    expect(pkg.engines.node).toBe(">=22.12")
+    expect(readme).toContain("22.12")
     expect(readme).toContain("npm run dev:mock")
     for (const script of ["start", "test", "typecheck", "dev:mock", "demo:seed"]) expect(pkg.scripts, script).toHaveProperty([script])
   })
@@ -180,7 +180,7 @@ describe("it ships safely", () => {
     const workflow = read(".github/workflows/ci.yml")
     expect(workflow).toContain("npm test")
     expect(workflow).toContain("npm run typecheck")
-    expect(workflow).toMatch(/node:\s*\[20,\s*22\]/)
+    expect(workflow).toMatch(/node:\s*\[22,\s*24\]/)
     expect(workflow).toMatch(/permissions:\s*\n\s+contents: read/)
   })
 })
