@@ -41,6 +41,7 @@
     "dev": "node --watch server/index.js",
     "dev:mock": "node scripts/dev-mock.js",
     "demo:seed": "node scripts/seed-demo.js",
+    "check:live": "node scripts/live-check.js",
     "vendor": "node scripts/vendor.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

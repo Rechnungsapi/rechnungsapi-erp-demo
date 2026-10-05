@@ -65,6 +65,8 @@ Open **http://localhost:3000**. Prefer Docker? `docker compose up` does the same
 
 Just want to look around first? `npm run dev:mock` starts the demo against a local mock of the API, no token needed. Its answers are simulated.
 
+Want to see that your token works end to end? `npm run check:live -- --yes` creates a ZUGFeRD invoice and an XRechnung with the real API, checks both again and reads the data embedded in the PDF. It prints one line per step, uses 5 API calls and never prints your token.
+
 ## The whole integration is one file
 
 Every call to RechnungsAPI lives in [`server/einvoice.js`](server/einvoice.js), about 200 lines with comments. It uses the official [`rechnungsapi-sdk`](https://github.com/Rechnungsapi/rechnungsapi-sdk), hides the HTTP details, and turns every failure into a stable error code. The rest of the app never sees a status code, a field name from the API or your token.
@@ -136,7 +138,7 @@ Details and how to report a problem: [SECURITY.md](SECURITY.md).
 server/            Express app, the RechnungsAPI integration (einvoice.js), invoice PDF, storage
 shared/            Money, VAT and date logic used by both the server and the browser
 public/            The UI: plain ES modules, one stylesheet, one vendored library
-scripts/           dev:mock (run against the mock gateway), demo:seed, vendor
+scripts/           dev:mock (run against the mock gateway), demo:seed, check:live, vendor
 test/              the test suite, with a mock gateway that applies the EN 16931 arithmetic rules
 docs/              Architecture, adapting it to your ERP, screenshots
 ```
@@ -148,6 +150,7 @@ npm test             # the whole suite
 npm run typecheck    # JSDoc types, checked by tsc, no build step
 npm run dev:mock     # the demo against a local mock of the API
 npm run demo:seed    # fill a running demo with six sample invoices
+npm run check:live   # try your token end to end (5 API calls, asks for --yes)
 ```
 
 The mock gateway in [`test/mock-gateway.js`](test/mock-gateway.js) answers like the documented API and checks the EN 16931 arithmetic, so the tests prove that the invoice this demo builds would pass a validator. Its documents are simplified placeholders: real XML, PDF/A-3 and validation come from RechnungsAPI.
