@@ -843,8 +843,12 @@ code, pre, .mono {
   white-space: nowrap;
 }
 
+.show-narrow { display: none; }
+
 @media (max-width: 720px) {
   .hide-narrow { display: none; }
+  .show-narrow { display: block; }
+  .table th, .table td { padding: 12px 10px; }
 }
 
 /* --- KPI -------------------------------------------------------------------------------------------- */

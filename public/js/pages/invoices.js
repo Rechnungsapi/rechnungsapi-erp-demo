@@ -63,23 +63,26 @@ export function InvoicesPage() {
                 <thead>
                   <tr>
                     <th>${t("inv.col.number")}</th>
-                    <th>${t("inv.col.customer")}</th>
-                    <th>${t("inv.col.format")}</th>
+                    <th class="hide-narrow">${t("inv.col.customer")}</th>
+                    <th class="hide-narrow">${t("inv.col.format")}</th>
                     <th>${t("inv.col.status")}</th>
-                    <th>${t("inv.col.issued")}</th>
-                    <th>${t("inv.col.due")}</th>
+                    <th class="hide-narrow">${t("inv.col.issued")}</th>
+                    <th class="hide-narrow">${t("inv.col.due")}</th>
                     <th class="num">${t("inv.col.total")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${invoices.map(
                     (invoice) => html`<tr key=${invoice.id} class="clickable" onClick=${() => navigate(`/invoices/${invoice.id}`)}>
-                      <td class="cell-title"><a href=${`#/invoices/${invoice.id}`} onClick=${(event) => event.stopPropagation()}>${invoice.number}</a></td>
-                      <td>${invoice.buyerName}</td>
-                      <td><${FormatBadge} format=${invoice.format} /></td>
+                      <td>
+                        <div class="cell-title"><a href=${`#/invoices/${invoice.id}`} onClick=${(event) => event.stopPropagation()}>${invoice.number}</a></div>
+                        <div class="small muted show-narrow">${invoice.buyerName}</div>
+                      </td>
+                      <td class="hide-narrow">${invoice.buyerName}</td>
+                      <td class="hide-narrow"><${FormatBadge} format=${invoice.format} /></td>
                       <td><${StatusBadge} status=${invoice.status} issues=${invoice.issues} /></td>
-                      <td class="nowrap">${fmt.date(invoice.issueDate)}</td>
-                      <td class="nowrap">${fmt.date(invoice.dueDate)}</td>
+                      <td class="nowrap hide-narrow">${fmt.date(invoice.issueDate)}</td>
+                      <td class="nowrap hide-narrow">${fmt.date(invoice.dueDate)}</td>
                       <td class="num strong">${fmt.money(invoice.gross)}</td>
                     </tr>`,
                   )}
