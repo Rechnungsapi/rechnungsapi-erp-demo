@@ -23,8 +23,10 @@ console.log(`
   API token   ${running.einvoice.configured ? "configured" : "missing: create a free one at https://rechnungsapi.de/register and set RECHNUNGSAPI_TOKEN in .env"}
   Data        ${config.dataDir}
 `)
-if (!loopback) {
-  console.warn("  Warning: this demo has no login. Anyone who can reach it can create invoices with your token.\n")
+if (process.env.DEMO_IN_DOCKER) {
+  console.log("  Running in Docker. The demo has no login, so keep the port published on 127.0.0.1 only (docker-compose.yml does).\n")
+} else if (!loopback) {
+  console.warn(`  Warning: this demo has no login and listens on ${config.host}. Anyone who can reach it can use your token.\n`)
 }
 
 for (const signal of ["SIGINT", "SIGTERM"]) {

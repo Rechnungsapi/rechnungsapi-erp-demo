@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+data
+.env
+.env.*
+!.env.example
+assets
+docs
+scripts
+test
+*.md
+vitest.config.js
+tsconfig.json

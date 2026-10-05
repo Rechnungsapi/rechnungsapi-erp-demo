@@ -1,0 +1,22 @@
+# docker compose up
+#
+# Compose reads a ".env" file next to this file (see .env.example) and fills the variables below
+# from it. Without one the demo still starts and shows how to add your token.
+services:
+  erp-demo:
+    build: .
+    image: rechnungsapi-erp-demo
+    # The demo has no login: publish it on this machine only.
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      RECHNUNGSAPI_TOKEN: ${RECHNUNGSAPI_TOKEN:-}
+      RECHNUNGSAPI_BASE_URL: ${RECHNUNGSAPI_BASE_URL:-}
+      RECHNUNGSAPI_V2_BASE_URL: ${RECHNUNGSAPI_V2_BASE_URL:-}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-}
+    volumes:
+      - erp-demo-data:/data
+    restart: unless-stopped
+
+volumes:
+  erp-demo-data:
