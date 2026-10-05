@@ -111,6 +111,11 @@ describe("the e-invoice service", () => {
     expect(gateway.calls.at(-1).body.transport).toEqual({ type: "email", useTransport: true, sender: "a@example.com", receiver: "b@example.org", subject: "s", message: "m" })
   })
 
+  it("treats a rejected token or a temporary outage during a conversion as an error, not as a verdict on the document", async () => {
+    await expect(service().convert(TINY_PDF, "unauthorized.pdf")).rejects.toMatchObject({ code: "unauthorized", details: { reference: "ZAPI-MOCK-ERR" } })
+    await expect(service().convert(TINY_PDF, "temporary.pdf")).rejects.toMatchObject({ code: "upstream" })
+  })
+
   it("keeps a refused conversion apart from a crash", async () => {
     const refused = await service().convert(TINY_PDF, "unreadable.pdf")
     expect(refused).toMatchObject({ ok: false, status: 422, code: "EXTRACTION_LOW_CONFIDENCE", retryable: false })

@@ -122,6 +122,11 @@ export function createEInvoice({ token, baseUrl, v2BaseUrl, fetch: fetchImpl, on
           return { ok: true, pdf: Buffer.from(result.pdfBase64, "base64"), fileName: result.fileName, reference: result.reference }
         }
         const { error } = result.body
+        // Some refusals are about the request and not about the document: they are errors, like anywhere else.
+        if (error.code === "UNAUTHORIZED") throw new EInvoiceError("unauthorized", error.userMessage, { reference: error.reference })
+        if (error.code === "PROCESSING_TEMPORARY_ERROR" || error.code === "UNKNOWN_ERROR") {
+          throw new EInvoiceError("upstream", error.userMessage, { reference: error.reference })
+        }
         return {
           ok: false,
           status: result.status,

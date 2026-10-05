@@ -95,6 +95,12 @@ describe("converting a PDF to ZUGFeRD", () => {
     expect(file.body.includes("%mock-zugferd:")).toBe(true)
   })
 
+  it("reports a rejected token during a conversion as an error and keeps no history entry for it", async () => {
+    const { status, body } = await upload("convert", TINY_PDF, "unauthorized.pdf")
+    expect([status, body.error]).toEqual([502, "unauthorized"])
+    expect(demo.store.list("incoming")).toHaveLength(0)
+  })
+
   it("treats a refused conversion as an answer with a reason, not as an error", async () => {
     const { status, body } = await upload("convert", TINY_PDF, "unreadable.pdf")
     expect(status).toBe(201)

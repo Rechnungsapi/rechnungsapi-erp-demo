@@ -159,6 +159,8 @@ const ROUTES = {
   "/createZugferdFromPdf": ({ pdfInvoiceBase64, fileName }) => {
     const file = Buffer.from(String(pdfInvoiceBase64 ?? ""), "base64")
     if (!isDocument(file)) return failureEnvelope(400, "PDF_CORRUPT", "Die Datei ist kein lesbares PDF oder Bild.")
+    if (/unauthorized/i.test(String(fileName ?? ""))) return failureEnvelope(401, "UNAUTHORIZED", "Der Zugriff wurde abgelehnt.")
+    if (/temporary/i.test(String(fileName ?? ""))) return failureEnvelope(503, "PROCESSING_TEMPORARY_ERROR", "Bitte versuchen Sie es gleich noch einmal.")
     if (/unreadable/i.test(String(fileName ?? ""))) {
       return failureEnvelope(422, "EXTRACTION_LOW_CONFIDENCE", "Der Text konnte nicht sicher gelesen werden.")
     }
