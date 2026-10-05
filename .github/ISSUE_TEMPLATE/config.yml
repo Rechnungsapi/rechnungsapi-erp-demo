@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions about RechnungsAPI, plans or your project
+    url: https://rechnungsapi.de/contact
+    about: For product, account and integration questions, talk to us directly.
