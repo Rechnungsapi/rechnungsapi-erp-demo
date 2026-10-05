@@ -1,0 +1,62 @@
+{
+  "name": "rechnungsapi-erp-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Open-source demo ERP that creates, validates and reads ZUGFeRD and XRechnung e-invoices with RechnungsAPI (rechnungsapi.de).",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "RechnungsAPI",
+    "email": "support@rechnungsapi.de",
+    "url": "https://rechnungsapi.de"
+  },
+  "homepage": "https://rechnungsapi.de",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rechnungsapi/rechnungsapi-erp-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rechnungsapi/rechnungsapi-erp-demo/issues"
+  },
+  "keywords": [
+    "rechnungsapi",
+    "rechnungsapi.de",
+    "erp",
+    "demo",
+    "example",
+    "e-invoicing",
+    "e-rechnung",
+    "zugferd",
+    "xrechnung",
+    "en16931",
+    "invoice",
+    "nodejs",
+    "express"
+  ],
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "dev:mock": "node scripts/dev-mock.js",
+    "demo:seed": "node scripts/seed-demo.js",
+    "vendor": "node scripts/vendor.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pdfkit": "^0.20.2",
+    "rechnungsapi-sdk": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/pdfkit": "^0.17.6",
+    "htm": "^3.1.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
