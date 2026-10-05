@@ -144,7 +144,7 @@ export function InvoiceDetailPage({ route }) {
         ? html`<div style=${{ padding: "20px" }} class="stack">
             <div class="grid grid-2">
               <div>
-                <h3 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.seller")}</h3>
+                <h2 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.seller")}</h2>
                 <${KeyValues} items=${[
                   [t("cus.name"), invoice.seller.name],
                   [t("cus.street"), invoice.seller.street],
@@ -155,7 +155,7 @@ export function InvoiceDetailPage({ route }) {
                 ]} />
               </div>
               <div>
-                <h3 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.buyer")}</h3>
+                <h2 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.buyer")}</h2>
                 <${KeyValues} items=${[
                   [t("cus.name"), invoice.buyer.name],
                   [t("cus.street"), invoice.buyer.street],
@@ -167,7 +167,7 @@ export function InvoiceDetailPage({ route }) {
               </div>
             </div>
             <div>
-              <h3 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.lines")}</h3>
+              <h2 class="card-title" style=${{ marginBottom: "10px" }}>${t("det.lines")}</h2>
               <div class="table-wrap">
                 <table class="table">
                   <thead>

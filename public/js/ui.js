@@ -1,4 +1,4 @@
-import { html, useEffect, useMemo, useRef, useState } from "./vendor/htm-preact.js"
+import { html, useEffect, useLayoutEffect, useMemo, useRef, useState } from "./vendor/htm-preact.js"
 import { clip, formatXml, highlightJs, highlightJson, highlightXml } from "./code.js"
 import { useApp } from "./context.js"
 import { Icon } from "./icons.js"
@@ -105,29 +105,47 @@ export const Loading = () => {
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
+/** The dialogs that are open, the last one on top: only that one reacts to the keyboard. */
+const openDialogs = []
+
 export function Modal({ title, onClose, children, footer, width }) {
   const { t } = useApp()
   const dialog = useRef(null)
+  const close = useRef(onClose)
+  close.current = onClose
 
-  useEffect(() => {
+  // A layout effect runs before the dialog is first painted, so the focus is inside it and Escape works from the very first moment.
+  useLayoutEffect(() => {
     const previous = document.activeElement
     dialog.current?.querySelector(FOCUSABLE)?.focus()
-    return () => previous?.focus?.()
+    openDialogs.push(dialog)
+
+    // Listening on the document (not on the dialog) keeps Escape and Tab working when the focus
+    // is not inside the dialog yet, or after a click on plain text inside it moved the focus to the page.
+    const onKeyDown = (event) => {
+      if (openDialogs.at(-1) !== dialog) return
+      if (event.key === "Escape") return close.current()
+      if (event.key !== "Tab") return
+      const items = [...dialog.current.querySelectorAll(FOCUSABLE)]
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement
+      if (!dialog.current.contains(active)) (event.preventDefault(), (event.shiftKey ? last : first).focus())
+      else if (event.shiftKey && active === first) (event.preventDefault(), last.focus())
+      else if (!event.shiftKey && active === last) (event.preventDefault(), first.focus())
+    }
+    document.addEventListener("keydown", onKeyDown)
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+      openDialogs.splice(openDialogs.indexOf(dialog), 1)
+      previous?.focus?.()
+    }
   }, [])
 
-  const onKeyDown = (event) => {
-    if (event.key === "Escape") return onClose()
-    if (event.key !== "Tab") return
-    const items = [...dialog.current.querySelectorAll(FOCUSABLE)]
-    if (!items.length) return
-    const first = items[0]
-    const last = items[items.length - 1]
-    if (event.shiftKey && document.activeElement === first) (event.preventDefault(), last.focus())
-    else if (!event.shiftKey && document.activeElement === last) (event.preventDefault(), first.focus())
-  }
-
   return html`<div class="modal-backdrop" onMouseDown=${(event) => event.target === event.currentTarget && onClose()}>
-    <div ref=${dialog} class="modal" style=${width ? { width: `min(${width}px, 100%)` } : undefined} role="dialog" aria-modal="true" aria-label=${title} onKeyDown=${onKeyDown}>
+    <div ref=${dialog} class="modal" style=${width ? { width: `min(${width}px, 100%)` } : undefined} role="dialog" aria-modal="true" aria-label=${title}>
       <div class="modal-header">
         <h2 class="card-title">${title}</h2>
         <button type="button" class="btn btn-ghost btn-sm" aria-label=${t("common.close")} onClick=${onClose}><${Icon} name="x" /></button>
@@ -243,7 +261,7 @@ export function CodeBlock({ value, language = "json" }) {
 
   return html`<div class="code">
     <${Button} class="copy" size="sm" icon=${copied ? "check" : "copy"} onClick=${copy}>${copied ? t("common.copied") : t("common.copy")}<//>
-    <pre><code>${language === "json" ? highlightJson(source.text) : language === "xml" ? highlightXml(source.text) : highlightJs(source.text)}</code></pre>
+    <pre tabindex="0" role="region" aria-label=${{ json: "JSON", xml: "XML", js: "JavaScript" }[language]}><code>${language === "json" ? highlightJson(source.text) : language === "xml" ? highlightXml(source.text) : highlightJs(source.text)}</code></pre>
   </div>`
 }
 

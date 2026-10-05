@@ -425,7 +425,7 @@ export function InvoiceNewPage({ route }) {
         </div>
       </div>
 
-      <aside class="side stack">
+      <div class="side stack">
         <${Card} flush>
           <${Tabs}
             tabs=${[{ id: "pdf", label: t("new.preview.pdf") }, { id: "json", label: t("new.preview.json") }]}
@@ -443,7 +443,7 @@ export function InvoiceNewPage({ route }) {
               : html`<div class="preview-empty">${t("new.preview.hint")}</div>`}
           <div class="small muted" style=${{ padding: "10px 16px 14px", borderTop: "1px solid var(--border)" }}>${t("new.preview.free")}</div>
         <//>
-      </aside>
+      </div>
     </form>
   `
 }

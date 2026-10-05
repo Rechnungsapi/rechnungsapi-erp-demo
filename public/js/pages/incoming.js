@@ -152,7 +152,7 @@ export function IncomingPage() {
         : html`<div class="table-wrap">
             <table class="table">
               <thead>
-                <tr><th>${t("in.col.when")}</th><th>${t("in.col.file")}</th><th>${t("in.col.action")}</th><th>${t("in.col.result")}</th><th></th></tr>
+                <tr><th>${t("in.col.when")}</th><th>${t("in.col.file")}</th><th>${t("in.col.action")}</th><th>${t("in.col.result")}</th><th><span class="sr-only">${t("common.actions")}</span></th></tr>
               </thead>
               <tbody>
                 ${history.map(
@@ -251,7 +251,7 @@ function DataResult({ record }) {
               <span class="strong">${t("in.confidence")}</span>
               <span class="strong">${confidence} / 100</span>
             </div>
-            <div class="meter" role="meter" aria-valuenow=${confidence} aria-valuemin="0" aria-valuemax="100">
+            <div class="meter" role="meter" aria-label=${t("in.confidence")} aria-valuenow=${confidence} aria-valuemin="0" aria-valuemax="100">
               <div class=${`meter-bar ${confidence < 70 ? "low" : confidence < 85 ? "mid" : ""}`} style=${{ width: `${Math.min(confidence, 100)}%` }}></div>
             </div>
             <p class="small muted">${confidence < 70 ? t("in.confidence.low") : t("in.confidence.ok")}</p>

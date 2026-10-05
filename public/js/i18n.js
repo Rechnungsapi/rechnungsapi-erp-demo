@@ -27,6 +27,7 @@ export const DICT = {
     "common.error": "Something went wrong.",
     "common.saved": "Saved",
     "common.deleted": "Deleted",
+    "common.actions": "Actions",
 
     "nav.dashboard": "Dashboard",
     "nav.invoices": "Invoices",
@@ -373,6 +374,7 @@ export const DICT = {
     "common.error": "Etwas ist schiefgelaufen.",
     "common.saved": "Gespeichert",
     "common.deleted": "Gelöscht",
+    "common.actions": "Aktionen",
 
     "nav.dashboard": "Übersicht",
     "nav.invoices": "Rechnungen",

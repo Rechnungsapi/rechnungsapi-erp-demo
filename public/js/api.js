@@ -24,6 +24,8 @@ async function request(method, path, body) {
     throw new ApiError(0, { error: "network" })
   }
   const isJson = (response.headers.get("content-type") ?? "").includes("json")
+  // Read the (empty) body of a 204 as well: otherwise the browser marks the request as "canceled".
+  if (response.status === 204) await response.arrayBuffer()
   const payload = response.status === 204 ? null : isJson ? await response.json() : await response.blob()
   if (!response.ok) throw new ApiError(response.status, isJson ? payload : {})
   return payload

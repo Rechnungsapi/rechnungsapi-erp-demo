@@ -175,6 +175,17 @@ describe("the code of the pages", () => {
     }
   })
 
+  it("names every table column, also the one that only holds buttons", () => {
+    for (const [file, source] of pageSources) {
+      expect(source, file).not.toMatch(/<th\s*>\s*<\/th>|<th\s*\/>/)
+    }
+  })
+
+  it("lets the keyboard reach and scroll a code block", () => {
+    const ui = pageSources.find(([file]) => file.endsWith("ui.js"))[1]
+    expect(ui).toContain('<pre tabindex="0"')
+  })
+
   it("keeps the API token out of the browser code", () => {
     for (const [file, source] of pageSources) {
       expect(source, file).not.toMatch(/RECHNUNGSAPI_TOKEN\s*[:=]|Authorization|Bearer/)

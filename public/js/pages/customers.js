@@ -50,7 +50,7 @@ export function CustomersPage() {
                     <th>${t("cus.vatId")}</th>
                     <th>${t("cus.email")}</th>
                     <th>${t("cus.buyerReference")}</th>
-                    <th></th>
+                    <th><span class="sr-only">${t("common.actions")}</span></th>
                   </tr>
                 </thead>
                 <tbody>
